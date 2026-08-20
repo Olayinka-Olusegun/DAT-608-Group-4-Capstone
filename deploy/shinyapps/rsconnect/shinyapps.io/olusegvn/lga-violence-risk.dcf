@@ -1,0 +1,10 @@
+name: lga-violence-risk
+title: Seven day violence risk, Nigerian LGAs
+username: olusegvn
+account: olusegvn
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17726921
+bundleId: 12439085
+url: https://olusegvn.shinyapps.io/lga-violence-risk/
+version: 1

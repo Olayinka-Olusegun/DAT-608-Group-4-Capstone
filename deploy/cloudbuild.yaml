@@ -1,0 +1,45 @@
+# Builds both service images and pushes them to Artifact Registry.
+#
+# Cloud Build is used rather than a local Docker build so that the deployment
+# does not depend on the developer's machine, and so the images are produced on
+# the same architecture Cloud Run runs. A Mac on Apple silicon builds arm64 by
+# default, which Cloud Run will refuse.
+
+substitutions:
+  _REGION: europe-west1
+  _REPO: pau-risk
+  _TAG: latest
+
+options:
+  machineType: E2_HIGHCPU_8
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${_TAG}'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/dashboard:${_TAG}'
+
+steps:
+  - id: build-api
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-f'
+      - deploy/Dockerfile.api
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${_TAG}'
+      - '.'
+
+  # The two images share no layers, so building them in parallel halves the wall
+  # clock. waitFor with a dash starts the step immediately.
+  - id: build-dashboard
+    name: gcr.io/cloud-builders/docker
+    waitFor: ['-']
+    args:
+      - build
+      - '-f'
+      - deploy/Dockerfile.dashboard
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/dashboard:${_TAG}'
+      - '.'
+
+timeout: 2400s

@@ -1,0 +1,47 @@
+# FastAPI service: predictions, drivers, actor graph, brief and GeoJSON.
+#
+# The image ships a prebuilt warehouse and model so the container answers
+# requests the moment it starts, with no ingestion or training at boot. That
+# matters on Cloud Run, where a cold start holds the first request: loading a
+# 6 MB SQLite file is milliseconds, whereas rebuilding the panel would be minutes
+# and downloading UCDP would make the service depend on a third party being up.
+FROM python:3.13-slim AS base
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PORT=8080
+
+WORKDIR /app
+
+# libgomp is required by XGBoost, curl is used by the container healthcheck.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libgomp1 curl \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY deploy/requirements-api.txt ./requirements-api.txt
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+COPY pyproject.toml README.md ./
+COPY src/ ./src/
+RUN pip install --no-cache-dir --no-deps -e .
+
+COPY config/ ./config/
+COPY sql/ ./sql/
+COPY data/ ./data/
+
+# Run unprivileged. The warehouse is read mostly, and the Avro file sink writes
+# under data/streams, so that one directory has to be writable by this user.
+RUN useradd --create-home --uid 10001 service \
+ && mkdir -p data/streams \
+ && chown -R service:service /app/data
+USER service
+
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD curl -fsS "http://127.0.0.1:${PORT}/health" || exit 1
+
+# Cloud Run supplies PORT. One worker is correct here because the container is
+# scaled by replica count, not by in-process workers, and the model artefacts
+# would otherwise be loaded once per worker.
+CMD exec uvicorn pau_risk.api.main:app --host 0.0.0.0 --port "${PORT}" --workers 1
