@@ -1,0 +1,44 @@
+# Runtime dependencies for the served API.
+#
+# This is the full requirements.txt minus the training-only stack. PySpark is
+# 450 MB and only builds the panel, MLflow only records experiments, and
+# matplotlib only draws the evaluation figures. None of the three is reachable
+# from a request, and dropping them takes roughly 700 MB off the image.
+#
+# XGBoost, SHAP and scikit-learn stay: the service loads the trained booster to
+# answer scoring questions and the import chain from the brief module reaches
+# scikit-learn at module level.
+
+numpy>=1.26
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+pyarrow>=16.0
+shapely>=2.0
+
+xgboost>=2.1
+shap>=0.46
+networkx>=3.3
+
+SQLAlchemy>=2.0
+psycopg[binary]>=3.2
+
+fastavro>=1.9
+
+requests>=2.32
+httpx>=0.27
+beautifulsoup4>=4.12
+lxml>=5.2
+feedparser>=6.0
+pypdf>=5.0
+
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.9
+pydantic-settings>=2.5
+
+anthropic>=0.40
+
+PyYAML>=6.0
+python-dotenv>=1.0
+tenacity>=9.0

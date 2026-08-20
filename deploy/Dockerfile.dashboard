@@ -1,0 +1,54 @@
+# R Shiny dashboard: choropleth, ranked areas, drivers, actors, brief.
+#
+# Build this for amd64. Cloud Run runs amd64, and Posit only publishes Linux
+# binaries for amd64, so building natively on Apple silicon would compile the
+# whole leaflet dependency chain, including terra, from source and would then
+# need the full GDAL, GEOS and PROJ toolchain in the image. Locally:
+#   docker build --platform linux/amd64 -f deploy/Dockerfile.dashboard .
+FROM --platform=linux/amd64 rocker/r-ver:4.4.2
+
+ENV PORT=8080 \
+    SHINY_HOST=0.0.0.0 \
+    PAU_RISK_ROOT=/app
+
+WORKDIR /app
+
+# System libraries the R packages link against. curl and openssl are needed by
+# httr, and libxml2 by the XML parsing inside the leaflet dependency chain.
+# Headers the R packages link against. zlib and libpng are needed only when a
+# package falls back to compiling from source, which happens on architectures
+# Posit does not publish binaries for. They are small, and their absence fails
+# the build late and confusingly, with a missing zlib.h inside httpuv.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      libcurl4-openssl-dev libssl-dev libxml2-dev libsqlite3-dev \
+      zlib1g-dev libpng-dev curl \
+ && rm -rf /var/lib/apt/lists/*
+
+# Posit Package Manager serves precompiled Linux binaries, but only for amd64
+# and only when the request identifies itself as R on Linux. Cloud Build is
+# amd64, so this turns roughly twenty minutes of compiling into about three.
+# A local build on Apple silicon gets no binaries and falls back to source,
+# which is slow but produces the identical package set.
+RUN echo 'options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"), HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)))' \
+      >> /usr/local/lib/R/etc/Rprofile.site
+
+RUN install2.r --error --skipinstalled --ncpus -1 \
+      shiny DT leaflet DBI RSQLite jsonlite httr \
+ && rm -rf /tmp/downloaded_packages
+
+COPY app/ ./app/
+COPY config/ ./config/
+COPY data/ ./data/
+
+RUN useradd --create-home --uid 10001 service \
+ && chown -R service:service /app
+USER service
+
+WORKDIR /app/app
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+  CMD curl -fsS "http://127.0.0.1:${PORT}/" >/dev/null || exit 1
+
+# app.R reads PORT and SHINY_HOST from the environment and binds accordingly.
+CMD ["R", "-e", "shiny::runApp('.', launch.browser = FALSE)"]
