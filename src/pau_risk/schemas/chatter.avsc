@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "namespace": "ng.security.risk",
+  "name": "Chatter",
+  "doc": "A short real-time social post scored for threat content.",
+  "fields": [
+    {"name": "chatter_id", "type": "string"},
+    {"name": "platform", "type": "string"},
+    {"name": "posted_at", "type": "string"},
+    {"name": "lga_code", "type": ["null", "string"], "default": null},
+    {"name": "body", "type": "string"},
+    {"name": "sentiment", "type": ["null", "double"], "default": null},
+    {"name": "threat_score", "type": ["null", "double"], "default": null},
+    {"name": "url", "type": ["null", "string"], "default": null},
+    {"name": "ingested_at", "type": "string"}
+  ]
+}

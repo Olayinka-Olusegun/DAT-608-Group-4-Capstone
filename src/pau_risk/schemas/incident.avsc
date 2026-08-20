@@ -1,0 +1,32 @@
+{
+  "type": "record",
+  "namespace": "ng.security.risk",
+  "name": "Incident",
+  "doc": "A single located violent event normalised from any structured feed.",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "source", "type": "string"},
+    {"name": "source_event_id", "type": ["null", "string"], "default": null},
+    {"name": "event_date", "type": {"type": "int", "logicalType": "date"}},
+    {"name": "event_class", "type": {"type": "enum", "name": "EventClass",
+      "symbols": ["banditry_kidnapping", "state_operation", "other"]}},
+    {"name": "event_type", "type": ["null", "string"], "default": null},
+    {"name": "actor_primary", "type": ["null", "string"], "default": null},
+    {"name": "actor_secondary", "type": ["null", "string"], "default": null},
+    {"name": "dyad", "type": ["null", "string"], "default": null},
+    {"name": "lga_code", "type": ["null", "string"], "default": null},
+    {"name": "state_name", "type": ["null", "string"], "default": null},
+    {"name": "latitude", "type": ["null", "double"], "default": null},
+    {"name": "longitude", "type": ["null", "double"], "default": null},
+    {"name": "geolocation_precision", "type": ["null", "int"], "default": null},
+    {"name": "date_precision", "type": ["null", "int"], "default": null},
+    {"name": "fatalities", "type": "int", "default": 0},
+    {"name": "civilian_deaths", "type": "int", "default": 0},
+    {"name": "victims", "type": ["null", "int"], "default": null},
+    {"name": "ransom_ngn", "type": ["null", "double"], "default": null},
+    {"name": "headline", "type": ["null", "string"], "default": null},
+    {"name": "description", "type": ["null", "string"], "default": null},
+    {"name": "source_url", "type": ["null", "string"], "default": null},
+    {"name": "ingested_at", "type": "string"}
+  ]
+}

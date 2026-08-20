@@ -1,0 +1,2 @@
+[console_scripts]
+pau-risk = pau_risk.cli:main

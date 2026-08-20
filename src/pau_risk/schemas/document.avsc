@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "namespace": "ng.security.risk",
+  "name": "Document",
+  "doc": "An unstructured report, advisory or article awaiting entity extraction.",
+  "fields": [
+    {"name": "doc_id", "type": "string"},
+    {"name": "source", "type": "string"},
+    {"name": "doc_type", "type": ["null", "string"], "default": null},
+    {"name": "title", "type": ["null", "string"], "default": null},
+    {"name": "published_at", "type": ["null", {"type": "int", "logicalType": "date"}], "default": null},
+    {"name": "url", "type": ["null", "string"], "default": null},
+    {"name": "body", "type": "string"},
+    {"name": "lga_codes", "type": {"type": "array", "items": "string"}, "default": []},
+    {"name": "ransom_ngn", "type": ["null", "double"], "default": null},
+    {"name": "ingested_at", "type": "string"}
+  ]
+}
