@@ -1,0 +1,40 @@
+# Local equivalent of the deployed topology: the API and the dashboard as two
+# separate services, exactly as they run on Cloud Run. Bring both up with
+#
+#   docker compose up --build
+#
+# then the dashboard is on http://localhost:7788 and the API on
+# http://localhost:8000/docs
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.api
+    image: pau-risk-api:local
+    ports:
+      - "8000:8080"
+    environment:
+      PORT: "8080"
+      # Point at a PostGIS instance to use the primary back end instead of the
+      # embedded warehouse baked into the image.
+      # DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/pau_risk
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.dashboard
+    image: pau-risk-dashboard:local
+    ports:
+      - "7788:8080"
+    environment:
+      PORT: "8080"
+      PAU_RISK_ROOT: /app
+      # When set, the brief button calls the API rather than needing a Python
+      # runtime inside the R container.
+      PAU_RISK_API_URL: http://api:8080
+    depends_on:
+      - api
+    restart: unless-stopped

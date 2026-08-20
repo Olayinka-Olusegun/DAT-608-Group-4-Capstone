@@ -1,0 +1,31 @@
+# Build context control. The runtime data is deliberately NOT excluded: the
+# deployed services read a prebuilt warehouse, model and boundary set, which is
+# about 13 MB in total and makes each container self contained.
+.venv/
+.git/
+.github/
+.idea/
+.pytest_cache/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.egg-info/
+mlruns/
+.env
+
+# Reproducible from the pipeline, and large.
+data/raw/
+data/processed/
+data/streams/
+data/artifacts/mlflow.db
+data/artifacts/mlruns/
+data/warehouse.db-journal
+
+# Not needed at runtime.
+docs/
+tests/
+*.docx
+
+# gcloud falls back to .gitignore when this file is absent, which would strip
+# data/ out of the build context and produce a container with no warehouse.
+# This file exists to stop that happening.
