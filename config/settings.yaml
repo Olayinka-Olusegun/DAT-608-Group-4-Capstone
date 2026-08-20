@@ -1,0 +1,100 @@
+# Runtime configuration for the LGA violence risk pipeline.
+# Secrets never live here; they are read from the environment (see .env.example).
+
+project:
+  name: pau-lga-risk
+  horizon_days: 7
+  target_classes: [non_state_conflict, one_sided_violence]
+
+paths:
+  data_root: data
+  raw: data/raw
+  reference: data/reference
+  processed: data/processed
+  streams: data/streams
+  artifacts: data/artifacts
+
+storage:
+  # Set DATABASE_URL in the environment to use PostgreSQL with PostGIS and pgvector.
+  # When it is absent or unreachable the pipeline falls back to the embedded SQLite
+  # warehouse plus Parquet extracts, which the brief permits as a back-end alternative.
+  sqlite_path: data/warehouse.db
+  parquet_extracts: true
+  postgis: auto
+  pgvector: auto
+
+stream:
+  # Kafka is used when bootstrap_servers is reachable. Otherwise each producer writes
+  # Avro object-container files to paths.streams, which the consumer replays identically.
+  bootstrap_servers: localhost:9092
+  schema_registry_path: data/reference/schema_registry.json
+  topics:
+    incident: nga.incident.v1
+    document: nga.document.v1
+    chatter: nga.chatter.v1
+  compression: null
+  offline_sink: true
+
+reference:
+  boundaries_url: https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/7e30ec96-7f29-4ee8-9f4c-77633b353cbb/download/nga_admin_boundaries.geojson.zip
+  boundaries_member: nga_admin2.geojson
+  adjacency_buffer_degrees: 0.01
+  adjacency_min_neighbours: 3
+
+features:
+  engine: pandas          # pandas or spark
+  panel_start: "2013-01-07"
+  panel_end: "2024-12-30"
+  lag_weeks: [1, 2, 4, 8, 12, 26, 52]
+  neighbour_lag_weeks: [1, 4, 12]
+  censor_weeks: 260
+
+hawkes:
+  decay_init: 0.05        # per day, initial value for beta
+  fit_end: "2021-12-31"   # Hawkes parameters are estimated on training data only
+  max_iterations: 200
+  neighbour_weight_power: 1.0
+
+model:
+  train_end: "2021-12-31"
+  valid_end: "2022-12-31"
+  n_estimators: 700
+  learning_rate: 0.05
+  max_depth: 6
+  subsample: 0.8
+  colsample_bytree: 0.8
+  # min_child_weight and scale_pos_weight were selected by the sweep in
+  # scripts/tune_model.py, scored on the 2022 validation fold only. Leaving the
+  # positive class unweighted ranked better than up-weighting it, because the
+  # objective already optimises area under the precision-recall curve and the
+  # isotonic step afterwards restores the probability scale.
+  min_child_weight: 20
+  reg_lambda: 2.0
+  scale_pos_weight: 1.0
+  early_stopping_rounds: 50
+  calibration: isotonic
+  seed: 608
+
+risk_tiers:
+  # Cut points are recalculated on the validation fold and stored with the model,
+  # these values are the fallback used before the first calibration run.
+  low: 0.0
+  elevated: 0.05
+  high: 0.15
+  severe: 0.35
+
+alerting:
+  minimum_tier: High
+  cooldown_days: 7
+  dry_run: true
+  # Hold the channel if more than this share of the 774 areas clears the
+  # threshold in one week. That pattern indicates a broken input, not a national
+  # emergency, and a flood of alerts would destroy the channel's credibility.
+  max_alert_share: 0.05
+  webhook_url_env: ALERT_WEBHOOK_URL
+  recipients_file: config/recipients.txt
+
+brief:
+  model: claude-opus-5
+  max_tokens: 2000
+  top_lgas: 10

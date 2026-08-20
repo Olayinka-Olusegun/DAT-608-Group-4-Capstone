@@ -1,0 +1,6 @@
+# Surveillance officer mailing list. One address per line.
+# These are placeholders; replace them with the state security council distribution
+# list before enabling dispatch, and keep the file out of version control if the
+# addresses are not already public.
+state.security.council@example.gov.ng
+commissioner.police.operations@example.gov.ng
