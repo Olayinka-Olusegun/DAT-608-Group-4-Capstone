@@ -1,0 +1,12 @@
+{
+  "mu_scale": 0.42564325981852824,
+  "branching_ratio": 0.5044412739457477,
+  "self_share": 0.815124349699263,
+  "decay_per_day": 0.03145914922597551,
+  "half_life_days": 22.03324621339793,
+  "alpha_self": 0.41118236538649533,
+  "alpha_neighbour": 0.09325890855925234,
+  "log_likelihood": -14351.79181858926,
+  "n_events": 2445,
+  "n_dimensions": 774
+}

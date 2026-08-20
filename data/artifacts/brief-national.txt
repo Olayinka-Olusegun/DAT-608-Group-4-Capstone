@@ -1,0 +1,71 @@
+Weekly security outlook, week beginning 2024-12-30
+
+Scope and method
+This outlook covers 774 local government areas and reports the modelled probability of a
+banditry or kidnapping event in the 7 days beginning on the date above. Probabilities
+are calibrated, so a value of 0.10 should be read as roughly one week in ten rather than
+as an expectation of attack.
+
+Distribution of risk
+Across the country the model places 68 areas at elevated risk, 18 areas at high risk,
+680 areas at low risk, 8 areas at severe risk. The areas carrying the highest scores
+this week are concentrated in Benue, Borno, Plateau.
+
+Areas warranting attention
+
+Kukawa, Borno. Probability 0.157, tier Severe, national rank 1, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.02 raises the score; Hawkes
+expected events over the next 7 days at 0.13 raises the score; Baseline rate for this
+LGA at 0 raises the score. Actors recorded in this area: IS, JAS, Yan Gora.
+
+Gwoza, Borno. Probability 0.114, tier Severe, national rank 2, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.01 raises the score; Baseline
+rate for this LGA at 0.01 raises the score; Hawkes probability of any event in 7 days at
+0.09 raises the score. Actors recorded in this area: JAS, IS, Yan Gora.
+
+Barikin Ladi, Plateau. Probability 0.114, tier Severe, national rank 3, no comparable
+position last week. Principal drivers: Total Hawkes intensity at 0.01 raises the score;
+Baseline rate for this LGA at 0.01 raises the score; Hawkes probability of any event in
+7 days at 0.06 raises the score. Actors recorded in this area: Fulani, Mwaghavul , Ron.
+
+Riyom, Plateau. Probability 0.114, tier Severe, national rank 4, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.02 raises the score; Baseline
+rate for this LGA at 0 raises the score; Hawkes probability of any event in 7 days at
+0.1 raises the score. Actors recorded in this area: Fulani, Irigwe.
+
+Logo, Benue. Probability 0.113, tier Severe, national rank 5, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.02 raises the score; Baseline
+rate for this LGA at 0.01 raises the score; Hawkes probability of any event in 7 days at
+0.11 raises the score. Actors recorded in this area: Tiv.
+
+Guma, Benue. Probability 0.113, tier Severe, national rank 6, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.01 raises the score; Baseline
+rate for this LGA at 0.01 raises the score; Hawkes probability of any event in 7 days at
+0.06 raises the score. Actors recorded in this area: Tiv.
+
+Chibok, Borno. Probability 0.113, tier Severe, national rank 7, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.01 raises the score; Baseline
+rate for this LGA at 0.01 raises the score; Hawkes probability of any event in 7 days at
+0.07 raises the score. Actors recorded in this area: IS, JAS, Yan Gora.
+
+Konduga, Borno. Probability 0.113, tier Severe, national rank 8, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.02 raises the score; Baseline
+rate for this LGA at 0.01 raises the score; Hawkes probability of any event in 7 days at
+0.1 raises the score. Actors recorded in this area: IS, JAS, Yan Gora.
+
+Kwande, Benue. Probability 0.088, tier High, national rank 10, no comparable position
+last week. Principal drivers: Total Hawkes intensity at 0.01 raises the score; Hawkes
+probability of any event in 7 days at 0.08 raises the score; Baseline rate for this LGA
+at 0 raises the score. Actors recorded in this area: Tiv.
+
+Abadam, Borno. Probability 0.088, tier High, national rank 9, no comparable position
+last week. Principal drivers: Baseline rate for this LGA at 0 raises the score; Hawkes
+probability of any event in 7 days at 0.03 raises the score; Total Hawkes intensity at 0
+raises the score. Actors recorded in this area: IS, JAS.
+
+Caveat
+This outlook is generated from coded conflict event data and is an aid to
+prioritisation, not a forecast of individual incidents. Areas outside the list above are
+not assessed as safe, only as carrying a lower modelled probability this week.
+
+Prepared automatically from the LGA risk model. Narrative rendered from a fixed template because no language model credential was configured for this run.

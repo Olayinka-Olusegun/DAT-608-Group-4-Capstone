@@ -1,0 +1,335 @@
+{
+  "nga.incident.v1-value": [
+    {
+      "version": 1,
+      "schema_id": "0ab055200db53b1a",
+      "registered_at": "2026-08-15T21:09:01+00:00",
+      "schema": {
+        "type": "record",
+        "namespace": "ng.security.risk",
+        "name": "Incident",
+        "doc": "A single located violent event normalised from any structured feed.",
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "type": "string"
+          },
+          {
+            "name": "source_event_id",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "event_date",
+            "type": {
+              "type": "int",
+              "logicalType": "date"
+            }
+          },
+          {
+            "name": "event_class",
+            "type": {
+              "type": "enum",
+              "name": "EventClass",
+              "symbols": [
+                "banditry_kidnapping",
+                "state_operation",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "event_type",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "actor_primary",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "actor_secondary",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "dyad",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "lga_code",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "state_name",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "latitude",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "longitude",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "geolocation_precision",
+            "type": [
+              "null",
+              "int"
+            ],
+            "default": null
+          },
+          {
+            "name": "date_precision",
+            "type": [
+              "null",
+              "int"
+            ],
+            "default": null
+          },
+          {
+            "name": "fatalities",
+            "type": "int",
+            "default": 0
+          },
+          {
+            "name": "civilian_deaths",
+            "type": "int",
+            "default": 0
+          },
+          {
+            "name": "victims",
+            "type": [
+              "null",
+              "int"
+            ],
+            "default": null
+          },
+          {
+            "name": "ransom_ngn",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "headline",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "description",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "source_url",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "ingested_at",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "nga.document.v1-value": [
+    {
+      "version": 1,
+      "schema_id": "cf35ef484fe234f4",
+      "registered_at": "2026-08-15T21:09:01+00:00",
+      "schema": {
+        "type": "record",
+        "namespace": "ng.security.risk",
+        "name": "Document",
+        "doc": "An unstructured report, advisory or article awaiting entity extraction.",
+        "fields": [
+          {
+            "name": "doc_id",
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "type": "string"
+          },
+          {
+            "name": "doc_type",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "title",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "published_at",
+            "type": [
+              "null",
+              {
+                "type": "int",
+                "logicalType": "date"
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "url",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "lga_codes",
+            "type": {
+              "type": "array",
+              "items": "string"
+            },
+            "default": []
+          },
+          {
+            "name": "ransom_ngn",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "ingested_at",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "nga.chatter.v1-value": [
+    {
+      "version": 1,
+      "schema_id": "b5316bbeb3ace226",
+      "registered_at": "2026-08-15T21:09:01+00:00",
+      "schema": {
+        "type": "record",
+        "namespace": "ng.security.risk",
+        "name": "Chatter",
+        "doc": "A short real-time social post scored for threat content.",
+        "fields": [
+          {
+            "name": "chatter_id",
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "type": "string"
+          },
+          {
+            "name": "posted_at",
+            "type": "string"
+          },
+          {
+            "name": "lga_code",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "sentiment",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "threat_score",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "url",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "ingested_at",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

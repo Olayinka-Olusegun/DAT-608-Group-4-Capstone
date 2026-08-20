@@ -1,0 +1,119 @@
+{
+  "features": [
+    "weeks_since_nb_event",
+    "weeks_since_event",
+    "hawkes_total",
+    "hawkes_background",
+    "cal_month",
+    "cal_week_of_year",
+    "n_neighbours",
+    "area_sqkm",
+    "hawkes_prob_any",
+    "hawkes_expected_events",
+    "cal_school_in_session",
+    "hawkes_neighbour_share",
+    "hawkes_neighbour",
+    "cal_dry_season",
+    "actors_26w",
+    "cal_festival_within_horizon",
+    "hawkes_self",
+    "hist_rate",
+    "hawkes_self_share",
+    "state_events_4w",
+    "nb_events_12w",
+    "own_events_52w",
+    "own_fatalities_52w",
+    "nb_events_4w",
+    "state_ops_4w",
+    "nb_fatalities_4w",
+    "own_events_26w",
+    "nb_ops_12w",
+    "own_events_12w",
+    "nb_ops_4w",
+    "own_fatalities_12w",
+    "own_events_8w",
+    "nb_events_1w",
+    "own_ops_12w",
+    "own_events_4w",
+    "own_fatalities_4w",
+    "own_ops_4w",
+    "own_events_2w",
+    "own_events_1w"
+  ],
+  "tier_thresholds": {
+    "Elevated": 0.013651886023581028,
+    "High": 0.02611469477415085,
+    "Severe": 0.08846163749694824
+  },
+  "metrics": {
+    "split": {
+      "train": {
+        "rows": 363006,
+        "positives": 1904,
+        "from": "2013-01-07",
+        "to": "2021-12-27"
+      },
+      "valid": {
+        "rows": 40248,
+        "positives": 194,
+        "from": "2022-01-03",
+        "to": "2022-12-26"
+      },
+      "test": {
+        "rows": 81270,
+        "positives": 400,
+        "from": "2023-01-02",
+        "to": "2024-12-30"
+      }
+    },
+    "test": {
+      "roc_auc": 0.9232530140966985,
+      "average_precision": 0.06832611105770187,
+      "brier": 0.004731552683927096,
+      "positives": 400.0,
+      "rows": 81270.0,
+      "precision_at_10": 0.09238095238095237,
+      "recall_at_10": 0.23197273859038564,
+      "lift_at_10": 17.95468996689585,
+      "precision_at_20": 0.07,
+      "recall_at_20": 0.3554204510086863,
+      "lift_at_20": 13.75477145403616,
+      "precision_at_50": 0.04647619047619048,
+      "recall_at_50": 0.6141707693178282,
+      "lift_at_50": 9.50736350903998
+    },
+    "tier_thresholds": {
+      "Elevated": 0.013651886023581028,
+      "High": 0.02611469477415085,
+      "Severe": 0.08846163749694824
+    },
+    "hawkes": {
+      "mu_scale": 0.42564325981852824,
+      "branching_ratio": 0.5044412739457477,
+      "self_share": 0.815124349699263,
+      "decay_per_day": 0.03145914922597551,
+      "half_life_days": 22.03324621339793,
+      "alpha_self": 0.41118236538649533,
+      "alpha_neighbour": 0.09325890855925234,
+      "log_likelihood": -14351.79181858926,
+      "n_events": 2445,
+      "n_dimensions": 774
+    },
+    "n_features": 39
+  },
+  "hawkes_parameters": {
+    "mu_scale": 0.42564325981852824,
+    "branching_ratio": 0.5044412739457477,
+    "self_share": 0.815124349699263,
+    "decay_per_day": 0.03145914922597551,
+    "half_life_days": 22.03324621339793,
+    "alpha_self": 0.41118236538649533,
+    "alpha_neighbour": 0.09325890855925234,
+    "log_likelihood": -14351.79181858926,
+    "n_events": 2445,
+    "n_dimensions": 774
+  },
+  "run_id": "run-20260815T214454Z",
+  "model_version": "hawkes-xgb-2026-08-15",
+  "train_end": "2021-12-31"
+}
